@@ -46,6 +46,7 @@ namespace argot {
     typedef struct {
         int socket;
         std::string nickname;
+        std::uint8_t perms; // Look at PERM_* macros
     } client_info_t;
 
     /* Server class

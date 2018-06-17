@@ -17,16 +17,11 @@
 
 namespace argot {
     void Server::handle_client_msg(int sock, std::string msg) {
-        std::string msg2 = "{\"message_type\":1,\"nickname\":\"jacob\"}";
         json msg_json;
         json out_json;
         std::string out_string;
         int msgtype;
 
-        std::cout << "MSG: '" << msg << "' " << msg.length() << std::endl;
-        std::cout << "OTH: '" << msg2 << "' " << msg2.length() << std::endl;
-
-        std::cout << (int)msg.at(msg.length()-1) << std::endl;
 
         try {
             msg_json = json::parse(msg);
@@ -35,7 +30,6 @@ namespace argot {
             return;
         }
 
-        std::cout << "Succesful read" << std::endl;
 
         if (!msg_json.count("message_type")) {
             std::cout << "Json didn't contain the a message_type field" << std::endl;
@@ -72,10 +66,12 @@ namespace argot {
 
             break;
         case MSGTYPE_CHATMSG:
+            std::cout << "Chat message" << std::endl;
+            std::cout << msg_json.dump() << std::endl;
             try {
                 out_json = {
                     {"message_type", MSGTYPE_CHATMSG},
-                    {"sender_nickname", clients.at(sock).nickname},
+                    {"sender_nickname", clients.at(client_index(sock)).nickname},
                     {"contents", msg_json.at("contents")}
                 };
             } catch (std::exception* ex) {
@@ -83,6 +79,9 @@ namespace argot {
                 break;
             }
             std::cout << out_json.dump() << std::endl;
+            break;
+        default:
+            std::cout << "Unrec" << std::endl;
             break;
         }
     }

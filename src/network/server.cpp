@@ -39,12 +39,9 @@ namespace argot {
             }
             else {
                 ret.append(in_buf);
-                std::cout << amount_read << " bytes received from socket (" << sock << ")" << std::endl;
-                std::cout << "ret is now " << ret.length() << " bytes long" << std::endl;
             }
         } while (amount_read == IN_BUF_LENGTH);
 
-        std::cout << "FROM_READ: size = " << ret.length() << std::endl;
         return ret;
     }
 

@@ -57,7 +57,6 @@ namespace argot {
             }
         }
         else { /* Maybe a client was active */
-            std::cout << "Maybe message" << std::endl;
             int active_client = -1;
             bool client_left = false;
             std::string client_msg;
