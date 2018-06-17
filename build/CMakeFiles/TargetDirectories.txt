@@ -1,0 +1,3 @@
+/home/j4cobgarby/Documents/code/argo2/build/CMakeFiles/rebuild_cache.dir
+/home/j4cobgarby/Documents/code/argo2/build/CMakeFiles/GtkIM.dir
+/home/j4cobgarby/Documents/code/argo2/build/CMakeFiles/edit_cache.dir
