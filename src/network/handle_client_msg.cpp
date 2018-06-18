@@ -22,7 +22,6 @@ namespace argot {
         std::string out_string;
         int msgtype;
 
-
         try {
             msg_json = json::parse(msg);
         } catch (std::exception* ex) {
@@ -30,13 +29,11 @@ namespace argot {
             return;
         }
 
-
         if (!msg_json.count("message_type")) {
             std::cout << "Json didn't contain the a message_type field" << std::endl;
         }
 
         msgtype = (int)msg_json.at("message_type");
-        std::cout << "MSGTYPE: " << msgtype << std::endl;
 
         switch (msgtype) {
         case MSGTYPE_BLANK:
@@ -59,15 +56,12 @@ namespace argot {
                 /* Only if after the checks, the setup is still okay, then
                  * perform the setup */
                 clients.at(client_index(sock)).nickname = msg_json.at("nickname");
-                std::cout << "Registered nickname" << std::endl;
             }
             out_string = out_json.dump();
             send(sock, out_string.c_str(), out_string.length(), 0);
 
             break;
         case MSGTYPE_CHATMSG:
-            std::cout << "Chat message" << std::endl;
-            std::cout << msg_json.dump() << std::endl;
             try {
                 out_json = {
                     {"message_type", MSGTYPE_CHATMSG},
@@ -79,13 +73,13 @@ namespace argot {
                 break;
             }
     
-            std::cout << "Calling callback" << std::endl;
-            (*callbacks.s_client_message_cb)(msg_json.at("contents"));
+            if (callbacks.s_client_message_cb)
+                (*callbacks.s_client_message_cb)(
+                        clients.at(client_index(sock)).nickname, msg_json.at("contents"));
 
-            std::cout << out_json.dump() << std::endl;
             break;
         default:
-            std::cout << "Unrec" << std::endl;
+            std::cout << "Unrecognised msg type" << std::endl;
             break;
         }
     }

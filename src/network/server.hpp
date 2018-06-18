@@ -26,6 +26,9 @@ using json = nlohmann::json;
 #define DEFAULT_PORT 5555
 #define LISTEN_BACKLOG 5
 
+#ifndef NETWORK_SERVER_HPP
+#define NETWORK_SERVER_HPP
+
 namespace argot {
 
     /* This struct stores init info for the server */
@@ -38,9 +41,11 @@ namespace argot {
     /* This struct stores the callbacks that the server calls when certain events 
      * happen. */
     typedef struct {
-        void(*s_client_message_cb)(std::string);
-        void(*s_server_up_cb)();
-        void(*s_server_down_cb)();
+        void(*s_client_message_cb)(std::string nickname, std::string message) = nullptr;
+        void(*s_server_up_cb)() = nullptr;
+        void(*s_server_down_cb)() = nullptr;
+        void(*s_client_joined_cb)(std::string info) = nullptr;
+        void(*s_generic_log_cb)(std::string prefix, std::string info) = nullptr;
     } server_callbacks_t;
 
     typedef struct {
@@ -99,6 +104,8 @@ namespace argot {
         void shutdown(void);
     };
 }
+
+#endif
 
 /*
  * Server s(...);

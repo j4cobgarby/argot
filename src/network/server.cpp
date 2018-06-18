@@ -24,7 +24,6 @@ namespace argot {
             total_read += amount_read;
 
             if (total_read == 0) {
-                std::cout << "Socket (" << sock << ") closed" << std::endl;
                 close(sock);
                 for (auto it = clients.begin(); it != clients.end(); it++) {
                     if (it->socket == sock) {
@@ -90,6 +89,8 @@ namespace argot {
             std::perror("listen");
             exit(EXIT_FAILURE);
         }
+
+        if (callbacks.s_server_up_cb) (*callbacks.s_server_up_cb)();
 
         while (running) {
             read_timeout.tv_sec = SELECT_TIMEOUT;
@@ -159,8 +160,8 @@ namespace argot {
 
         running = false;
         write(internal_msgs[1], &dat, 1);
-        std::cout << "Joining..." << std::endl;
         server_thread.join();
-        std::cout << "Joined thread" << std::endl;
+
+        if (callbacks.s_server_down_cb) (*callbacks.s_server_down_cb)();
     }
 }

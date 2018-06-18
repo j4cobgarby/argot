@@ -35,7 +35,6 @@ namespace argot {
             info.socket = newclient;
             info.nickname = "unnamedclient" + std::to_string(clients.size());
 
-            std::cout << "New client! (" << info.socket << ")" << std::endl;
             clients.push_back(info);
         }
         else if (FD_ISSET(gui_in_pipe, &read_fds)) { /* Info from the GUI (probably a button) */

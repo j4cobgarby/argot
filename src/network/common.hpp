@@ -13,6 +13,9 @@
  * =====================================================================================
  */
 
+#ifndef NETWORK_COMMON_HPP
+#define NETWORK_COMMON_HPP
+
 namespace argot {
     enum msg_types {
         MSGTYPE_BLANK=0,
@@ -47,3 +50,4 @@ namespace argot {
 #define PERMS_ALL 0xff          /* ALL PERMS */
 }
 
+#endif
