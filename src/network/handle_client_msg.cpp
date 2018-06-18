@@ -78,6 +78,10 @@ namespace argot {
                 std::cout << "Error constructing json: " << ex->what() << std::endl;
                 break;
             }
+    
+            std::cout << "Calling callback" << std::endl;
+            (*callbacks.s_client_message_cb)(msg_json.at("contents"));
+
             std::cout << out_json.dump() << std::endl;
             break;
         default:

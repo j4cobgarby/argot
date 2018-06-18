@@ -10,12 +10,12 @@ pkg_check_modules(GTKMM gtkmm-3.0)
 link_directories(${GTKMM_LIBRARY_DIRS})
 include_directories(${GTKMM_INCLUDE_DIRS})
 
-add_executable(GtkIM
+add_executable(argot
     main.cpp
     network/server.cpp
     network/handle_client_msg.cpp
     network/handle_select.cpp)
 
-target_link_libraries(GtkIM
+target_link_libraries(argot
     ${GTKMM_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT})
