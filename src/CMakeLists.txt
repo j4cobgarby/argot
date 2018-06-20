@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.1)
 project(Argot)
 
 set(CMAKE_THREAD_PREFER_PTHREAD TRUE)
-set(CMAKE_CXX_FLAGS "-Wall -Wextra")
 
 find_package(PkgConfig)
 find_package(Threads)
@@ -16,7 +15,8 @@ add_executable(argot
     cmdarg.cpp
     network/server.cpp
     network/handle_client_msg.cpp
-    network/handle_select.cpp)
+    network/handle_select.cpp
+    gui/resources.c)
 
 target_link_libraries(argot
     ${GTKMM_LIBRARIES}
