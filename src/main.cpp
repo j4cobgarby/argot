@@ -1,11 +1,24 @@
+#include <gtkmm/aboutdialog.h>
+#include <gtkmm/builder.h>
+#include <gtkmm/button.h>
+#include <gtkmm/dialog.h>
+#include <gtkmm/entry.h>
+#include <gtkmm/imagemenuitem.h>
+#include <gtkmm/textbuffer.h>
+#include <gtkmm/textview.h>
+#include <gtkmm/toolbutton.h>
+#include <gtkmm/treeview.h>
+#include <gtkmm/window.h>
+
+#include <glibmm.h>
+
 #include "network/server.hpp"
 #include "cmdarg.hpp"
+#include "gui/gui.hpp"
 
 void message_handler(std::string nick, std::string msg) {
     std::cout << nick << "-> " << msg << std::endl;
 }
-
-Gtk::Window* main_window = nullptr;
 
 int main(int argc, char* argv[]) {
     uint16_t port;
@@ -13,7 +26,7 @@ int main(int argc, char* argv[]) {
     std::string motd;
 
     auto app = Gtk::Application::create(argc, argv, "uk.co.jacobgarby.gtkim");
-    auto builder = Gtk::Builder::create();
+    gui::Gui main_gui;
 
     /* Get command-line args */
     std::vector<std::string> args;
@@ -29,10 +42,6 @@ int main(int argc, char* argv[]) {
 
     motd = cmdarg::has_value("-m", args) 
         ? cmdarg::get_value("-m", args) : "Hello, world!";
-
-    /* Setup GUI builder */
-    builder->add_from_resource("/windows/design.glade");
-    builder->get_widget("main_window", main_window);
 
     /* Setup server config */
     argot::server_config_t conf = {
@@ -54,10 +63,10 @@ int main(int argc, char* argv[]) {
     argot::Server server(conf, cbs, 0);
     server.start();
 
-    main_window->show();
-    app->run(*main_window);
+    //main_gui.run(app);
 
     std::cout << "Shutting down..." << std::endl;
     server.shutdown();
     std::cout << "Done." << std::endl;
 }
+

@@ -16,7 +16,8 @@ add_executable(argot
     network/server.cpp
     network/handle_client_msg.cpp
     network/handle_select.cpp
-    gui/resources.c)
+    gui/resources.c
+    gui/gui.cpp)
 
 target_link_libraries(argot
     ${GTKMM_LIBRARIES}
