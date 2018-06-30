@@ -1,7 +1,7 @@
 #include "gui.hpp"
 
 namespace gui {
-    Gui::Gui() : server(server) {
+    Gui::Gui(argot::Server* server) : server(server) {
         auto builder = Gtk::Builder::create();
         builder->add_from_resource("/windows/design.glade");
 
@@ -24,12 +24,17 @@ namespace gui {
         send_btn->signal_pressed().connect(sigc::mem_fun(*this, &Gui::test_callback));
     }
 
+    Gui::~Gui() {
+        server->shutdown();
+    }
+
     void Gui::test_callback() {
         std::cout << "Callback" << std::endl;
     }
 
     void Gui::run(Glib::RefPtr<Gtk::Application> app) {
         main_window->show();
+        server->start();
         app->run(*main_window);
     }
 }

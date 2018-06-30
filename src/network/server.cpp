@@ -28,6 +28,7 @@ namespace argot {
                 for (auto it = clients.begin(); it != clients.end(); it++) {
                     if (it->socket == sock) {
                         clients.erase(it);
+                        std::cout << "Client left" << std::endl;
                         client_left = true;
                         break;
                     }

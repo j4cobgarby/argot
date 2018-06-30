@@ -39,6 +39,7 @@ namespace argot {
         case MSGTYPE_BLANK:
             break;
         case MSGTYPE_SETUP_REQ: /* Initial setup message */
+            std::cout << "Setup" << std::endl;
             out_json = {
                 {"message_type", MSGTYPE_SETUP_RESP},
                 {"status", RESPSTAT_OK}
@@ -62,6 +63,7 @@ namespace argot {
 
             break;
         case MSGTYPE_CHATMSG:
+            std::cout << "Chatmsg" << std::endl;
             try {
                 out_json = {
                     {"message_type", MSGTYPE_CHATMSG},

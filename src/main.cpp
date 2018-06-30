@@ -25,8 +25,7 @@ int main(int argc, char* argv[]) {
     int max_clients;
     std::string motd;
 
-    auto app = Gtk::Application::create(argc, argv, "uk.co.jacobgarby.gtkim");
-    gui::Gui main_gui;
+    auto app = Gtk::Application::create(argc, argv, "uk.co.jacobgarby.argot");
 
     /* Get command-line args */
     std::vector<std::string> args;
@@ -61,12 +60,15 @@ int main(int argc, char* argv[]) {
 
     /* Create and start server */
     argot::Server server(conf, cbs, 0);
-    server.start();
 
-    //main_gui.run(app);
+    gui::Gui main_gui(&server);
 
-    std::cout << "Shutting down..." << std::endl;
-    server.shutdown();
-    std::cout << "Done." << std::endl;
+    //server.start();
+
+    main_gui.run(app);
+
+    //std::cout << "Shutting down..." << std::endl;
+    //server.shutdown();
+    //std::cout << "Done." << std::endl;
 }
 

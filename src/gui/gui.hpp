@@ -67,8 +67,10 @@ namespace gui {
         argot::Server* server;
     public:
         Gui(argot::Server* server);
+        ~Gui();
 
         void test_callback();
+        void show_window(std::string)
 
         void run(Glib::RefPtr<Gtk::Application> app);
     };
