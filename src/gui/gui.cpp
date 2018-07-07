@@ -21,20 +21,19 @@ namespace gui {
         builder->get_widget("servsettings_stop_server", servsettings_stop_server);
         builder->get_widget("msg_entry", msg_entry);
 
-        send_btn->signal_pressed().connect(sigc::mem_fun(*this, &Gui::test_callback));
+        servsettings_start_server->signal_pressed().connect([this]{this->server->start();});
+        servsettings_stop_server->signal_pressed().connect([this]{
+            this->server->shutdown();
+        });
+        main_control_panel_btn->signal_clicked().connect([this]{this->servsettings->show();});
     }
 
     Gui::~Gui() {
-        server->shutdown();
-    }
-
-    void Gui::test_callback() {
-        std::cout << "Callback" << std::endl;
+        if (!server->is_running()) server->shutdown();
     }
 
     void Gui::run(Glib::RefPtr<Gtk::Application> app) {
         main_window->show();
-        server->start();
         app->run(*main_window);
     }
 }

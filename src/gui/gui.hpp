@@ -70,7 +70,7 @@ namespace gui {
         ~Gui();
 
         void test_callback();
-        void show_window(std::string)
+        void show_window(std::string);
 
         void run(Glib::RefPtr<Gtk::Application> app);
     };

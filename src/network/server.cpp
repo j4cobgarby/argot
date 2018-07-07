@@ -5,12 +5,20 @@ namespace argot {
         : 
             conf(conf),
             callbacks(callbacks),
-            gui_in_pipe(gui_in_pipe)
+            gui_in_pipe(gui_in_pipe),
+            running(false)
     {
         std::cout << "init" << std::endl;
         if (pipe(internal_msgs) == -1) {
             std::perror("pipe");
         }
+    }
+
+    Server::~Server() {
+        std::cout << "Destroying server" << std::endl;
+        shutdown();
+        std::cout << "Shutdown complete" << std::endl;
+        std::cout << "Destroyed" << std::endl;
     }
 
     std::string Server::read_from_socket(int sock, bool& client_left) {
@@ -162,6 +170,8 @@ namespace argot {
         running = false;
         write(internal_msgs[1], &dat, 1);
         server_thread.join();
+
+        clients.clear();
 
         if (callbacks.s_server_down_cb) (*callbacks.s_server_down_cb)();
     }

@@ -54,13 +54,6 @@ namespace argot {
         std::uint8_t perms; // Look at PERM_* macros
     } client_info_t;
 
-    /* Server class
-     ****************
-     * This class should be deleted and then reinitialised
-     * every time the server is restarted, since this is the
-     * best and only reliable way to update all of the settings
-     * and kick all connected clients.
-     */
     class Server {
     protected:
         struct sockaddr_in addr;
@@ -96,12 +89,15 @@ namespace argot {
         int client_index(std::string nick);
     public:
         Server(server_config_t conf, server_callbacks_t callbacks, int gui_in_pipe);
+        ~Server();
 
         /* Non-blocking function to start the server. */
         void start(void);
 
         /* Stops the server, kills all sockets/connections and does all cleanup */
         void shutdown(void);
+
+        bool is_running() {return running;}
     };
 }
 
